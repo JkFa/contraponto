@@ -1,0 +1,23 @@
+# secrets
+.env
+.env.local
+apps/web/.env.local
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+# data
+.data/
+apps/api/.data/
+# node
+node_modules/
+apps/web/dist/
+apps/web/test-results/
+apps/web/playwright-report/
+# original doc bundle (kept outside the repo)
+contraponto-docs-v2/
+contraponto-docs-v2.zip
