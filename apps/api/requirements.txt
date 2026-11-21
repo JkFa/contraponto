@@ -1,0 +1,10 @@
+fastapi==0.165.0
+uvicorn[standard]==0.54.0
+pydantic==2.14.4
+pydantic-settings==2.16.3
+python-multipart==0.0.34
+httpx==0.28.1
+youtube-transcript-api==1.2.5
+pypdf==7.1.1
+rapidfuzz==3.14.6
+edge-tts==7.3.1
