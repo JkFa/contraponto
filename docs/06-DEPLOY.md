@@ -138,10 +138,19 @@ Space → Settings → **Variables and secrets**:
 | `ALLOWED_ORIGINS` | Variable | `https://jkfa.github.io,http://localhost:5173` |
 | `PUBLIC_BASE_URL` | Variable | URL do Space (usada em `share_url`) |
 
+> **Estado em 21/11/2026:** não havia `GEMINI_API_KEY` nem `GROQ_API_KEY` no ambiente de desenvolvimento.
+> Todo o desenvolvimento e os testes rodaram em modo mock (`MOCK_LLM=1`). O primeiro roteiro real acontece
+> quando a chave for colada no Space (ou em `.env` local) — ver `docs/QUALITY-REPORT.md`.
+> Sem chave configurada, o backend responde `LLM_NOT_CONFIGURED` e a UI orienta a usar a própria chave (BYOK em Ajustes).
+
 ### 4.5 Comportamento do Space gratuito
 - Dorme após inatividade; a primeira chamada acorda em ~30–60 s (UI deve avisar).
 - Disco é **efêmero**: reinício apaga episódios → por isso o TTL de 24 h e o aviso "baixe para guardar".
 - Se o YouTube bloquear o IP do Space: usar fallback de colar texto ou rodar localmente.
+
+### 4.6 TTS: fallback
+O provedor padrão é `edge-tts`. O fallback Piper (opcional em `docs/04 §5`) **não foi implementado**: se o Edge falhar
+após os retries, o episódio vai para `TTS_FAILED` e o usuário pode tentar de novo. Fica no backlog.
 
 ## 5. `.env.example`
 

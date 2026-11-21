@@ -1,0 +1,85 @@
+:root {
+  /* superfícies */
+  --ink-950: #0d0c0b;
+  --ink-900: #151311;
+  --ink-800: #1e1b18;
+  --line: #2d2924;
+  --line-strong: #3d3730;
+  /* texto */
+  --paper: #f4ecdf;
+  --paper-dim: #b9ae9b;
+  /* sinais */
+  --onair: #e8412a;
+  --onair-ink: #0d0c0b;
+  --amber: #f2a93b;
+  --sage: #8fb996;
+  --rust: #d9785a;
+  --sand: #c9b36a;
+  --host-1: #7fb2c9;
+  --host-2: #e0a08a;
+  /* forma */
+  --radius-s: 4px;
+  --radius-m: 10px;
+  --shadow-lamp: 0 0 24px color-mix(in oklab, var(--onair) 55%, transparent);
+  /* tipo */
+  --font-display: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
+  --font-body: "Bricolage Grotesque Variable", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: clamp(1.5rem, 1.2rem + 1.2vw, 1.875rem);
+  --step-3: clamp(2.1rem, 1.4rem + 3vw, 3.4rem);
+  /* espaço */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --measure: 40rem;
+  color-scheme: dark;
+}
+
+/* Tema "papel" (claro) */
+:root[data-theme="light"] {
+  --ink-950: #efe6d6;
+  --ink-900: #e7dcc8;
+  --ink-800: #ddd0b8;
+  --line: #c9bba2;
+  --line-strong: #a89a80;
+  --paper: #1b1713;
+  --paper-dim: #5a4f40;
+  --onair: #b42f1b;
+  --onair-ink: #fffaf2;
+  --amber: #8a5200;
+  --sage: #2f6b3a;
+  --rust: #9c3a1f;
+  --sand: #6e5a12;
+  --host-1: #1f5d78;
+  --host-2: #8c3f25;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --ink-950: #efe6d6;
+    --ink-900: #e7dcc8;
+    --ink-800: #ddd0b8;
+    --line: #c9bba2;
+    --line-strong: #a89a80;
+    --paper: #1b1713;
+    --paper-dim: #5a4f40;
+    --onair: #b42f1b;
+    --onair-ink: #fffaf2;
+    --amber: #8a5200;
+    --sage: #2f6b3a;
+    --rust: #9c3a1f;
+    --sand: #6e5a12;
+    --host-1: #1f5d78;
+    --host-2: #8c3f25;
+    color-scheme: light;
+  }
+}
