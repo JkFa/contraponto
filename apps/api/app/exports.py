@@ -24,6 +24,13 @@ def source_label(src: Source | Material | None, fallback: str) -> str:
     return src.title or src.url or fallback
 
 
+def source_name(src: Source) -> str:
+    """Human name for a source: its title/URL, or what kind of upload it was."""
+    if src.title or src.url:
+        return src.title or src.url or ""
+    return "texto colado" if src.kind == "text" else "arquivo enviado"
+
+
 def legal_text(primary: Source, confronto: Source | None) -> str:
     """docs/08 §9 standard text."""
     title = source_label(primary, "material enviado")

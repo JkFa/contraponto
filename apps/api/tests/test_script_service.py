@@ -320,3 +320,9 @@ def test_map_reduce_when_over_limit(monkeypatch) -> None:
     assert prim and conf
     assert len(prim) < len(c.primary.formatted())
     assert len(conf) < len(c.confronto.formatted())
+
+
+def test_system_prompt_states_minimum_words() -> None:
+    system = prompts.build_system(("Davi", "Lia"), "analitico", 750)
+    assert "750 palavras" in system and "NUNCA menos de 637 palavras" in system
+    assert "cerca de 18 falas" in system

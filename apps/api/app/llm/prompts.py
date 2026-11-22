@@ -115,7 +115,9 @@ ESTILO:
 - Cada fala com no máximo 600 caracteres. Alternar os falantes.
 - Escreva números e siglas como se lê em voz alta (ex.: "dois mil e vinte e seis", "I A").
 - Sem emojis, sem marcações de cena, sem rubricas.
-- Duração alvo: {words} palavras no total (±20%).
+- Duração alvo: {words} palavras no total (±20%): NUNCA menos de {min_words} palavras.
+  Isso dá cerca de {turns} falas de 30 a 60 palavras; desenvolva cada ponto da verificação
+  com exemplos e perguntas entre os apresentadores, sem encher linguiça.
 
 SAÍDA: apenas JSON válido no schema fornecido (inclui turns, verification, verdict).
 """
@@ -180,6 +182,8 @@ def build_system(hosts: tuple[str, str], tone: Tone, words: int) -> str:
         host2=hosts[1],
         tone_desc=TONE_DESC.get(tone, TONE_DESC["analitico"]),
         words=words,
+        min_words=int(words * 0.85),
+        turns=max(8, round(words / 42)),
     )
     return "\n".join([MASTER_PROMPT, INTERNAL_EXAM, EXTRA_RULES, SCHEMA, mode_base])
 

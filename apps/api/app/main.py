@@ -24,7 +24,7 @@ from starlette.responses import StreamingResponse
 from app import __version__
 from app.config import Settings, get_settings
 from app.errors import ApiError
-from app.exports import script_md, slugify, sources_md
+from app.exports import script_md, slugify, source_name, sources_md
 from app.ingest.files import MAX_FILE_BYTES, check_text_length, ingest_file, ingest_text
 from app.ingest.youtube import extract_video_id
 from app.jobs import EpisodeRecord, JobManager, PendingInput
@@ -355,8 +355,8 @@ def create_app(settings: Settings | None = None, jobs: JobManager | None = None)
     async def get_verification_md(episode_id: str) -> Response:
         rec, script = _with_script(episode_id)
         srcs = rec.sources
-        examined = srcs[0].title or srcs[0].url or "material enviado"
-        conf = (srcs[1].title or srcs[1].url or "material de confronto") if len(srcs) > 1 else None
+        examined = source_name(srcs[0])
+        conf = source_name(srcs[1]) if len(srcs) > 1 else None
         return _md(render_verification_md(script, examined, conf), "verificacao.md")
 
     @app.get("/api/episodes/{episode_id}/sources.md")
