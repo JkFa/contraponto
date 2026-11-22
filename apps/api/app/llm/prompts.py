@@ -66,7 +66,9 @@ REGRAS ADICIONAIS:
 - O veredito é a conclusão DESTE episódio, com base no que foi apresentado ("com base no que
   temos aqui…"); nunca uma sentença absoluta.
 - Turnos kind="citacao" e kind="confronto" sempre têm "role". Citação literal = texto copiado
-  exatamente da fonte indicada em "role".
+  exatamente da fonte indicada em "role". O "text" de um turno kind="citacao" contém SÓ o trecho
+  literal, sem moldura ("o autor diz:", aspas, comentários): quem apresenta a citação é a fala
+  anterior, de kind="contexto".
 - Conteúdo que incite violência, discriminação ou envolva menores de forma imprópria: não
   escreva roteiro; responda apenas {"refused": true}.
 """

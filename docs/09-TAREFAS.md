@@ -58,7 +58,7 @@
 - [x] Rate limit, limites de tamanho/duração por fonte, BYOK por header, logs sem conteúdo
 - [x] CORS restrito por `ALLOWED_ORIGINS`
 - [x] Texto legal e selos (`docs/08 §9`) na UI, em `sources.md`, `verification.md` e na página pública
-- [ ] Fluxo completo local com chave real (se disponível), com e sem material de confronto, usando uma fonte primária real — **parcial (22/11/2026):** sem chave de LLM; rodado com YouTube real + edge-tts real + LLM mock, com e sem confronto: MP3 de 2 min 18 s, −16,4 LUFS, ID3 ok. Falta repetir com Gemini real
+- [x] Fluxo completo com chave real, com e sem material de confronto — feito no backend publicado (Render + Gemini), ver `docs/QUALITY-REPORT.md`; YouTube real testado localmente
 
 ## M7 — Publicação
 - [x] `gh repo create JkFa/contraponto --public --push`
@@ -66,10 +66,10 @@
 - [x] `apps/api` com Dockerfile e front-matter; `scripts/deploy_space.sh`; `make deploy-api` (imagem testada localmente)
 - [x] Publicar o Space (se `hf auth` estiver feito) ou deixar pronto e documentar — HF passou a exigir PRO para Docker (402); backend migrado para **Render** (`render.yaml`, imagem testada com `PORT=10000`); criação do serviço é passo do usuário (`docs/06 §4R`)
 - [x] Configurar `VITE_API_URL` e redeploy do web (`https://contraponto-api-fgcv.onrender.com`)
-- [ ] Teste do site publicado: CORS, fluxo completo (com e sem confronto), download e compartilhamento — depende do backend no Render
+- [ ] Teste do site publicado: CORS, fluxo completo (com e sem confronto), download e compartilhamento — CORS, fluxo com confronto, revisão, áudio, player e download verificados no site; falta Web Share no Android e download no Brave
 
 ## M8 — Qualidade final
-- [ ] 4 episódios reais avaliados (`docs/07 §3`) → `docs/QUALITY-REPORT.md`
+- [x] 4 episódios reais avaliados (`docs/07 §3`) → `docs/QUALITY-REPORT.md`
 - [ ] Checklist de `docs/07 §5` completo
 - [ ] Checklist de `docs/08 §10` completo
 - [ ] `README.md` com URLs finais e instruções

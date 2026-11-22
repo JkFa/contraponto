@@ -2,18 +2,31 @@
 
 Critérios em `docs/07-TESTES-E-QUALIDADE.md §3`.
 
-## Situação
+## Episódios de qualidade (22/11/2026, backend no Render, Gemini real, vozes Edge, 3 min)
 
-Os **4 episódios de qualidade com material real ainda não foram avaliados**: exigem um LLM real, e não havia
-`GEMINI_API_KEY`/`GROQ_API_KEY` disponível durante o desenvolvimento. Assim que a chave estiver no Space (ou em `.env`),
-gerar os quatro casos abaixo e preencher a tabela.
+Materiais escritos para o teste (fictícios, sem obra de terceiros) para não depender do YouTube a partir do IP do
+servidor. Todos passaram pelo validador; verificação conferida item a item manualmente.
 
-| Data | Caso | Material | Resultado | Problemas | Correções |
+| # | Caso | Material | Resultado | Problemas | Correções |
 |---|---|---|---|---|---|
-| — | 1. crítica com confronto | — | pendente | — | — |
-| — | 2. react com confronto | — | pendente | — | — |
-| — | 3. crítica sem confronto | — | pendente | — | — |
-| — | 4. react, texto colado, sem confronto | — | pendente | — | — |
+| 1 | crítica **com** confronto | coluna sobre home office × notas com dados de 1.200 empresas | 4 itens corretos (2 contestadas, 1 parcial, 1 não verificável/interna); 2 citações literais da primária; veredito "Com base no que temos aqui…"; 70 s roteiro + 60 s áudio; −16,4 LUFS | roteiro curto (357 palavras, alvo 360–540); modelo `gemini-2.5-flash` dava 404 | prompt passou a exigir mínimo de palavras e nº de falas; modelo padrão `gemini-3.6-flash` + descoberta automática em 404 |
+| 2 | react **com** confronto | divulgação de app "Foco+" × resumo sobre sons binaurais e grupo de controle | 4 itens corretos (3 contestadas, 1 parcial), todos `evidence_role=confronto`; 449 palavras; 1 citação; 126 s + 65 s; −16,5 LUFS | nenhum | — |
+| 3 | crítica **sem** confronto | discurso sobre ciclovia (impressões, 40% sem fonte) | 4 itens `nao_verificavel/interna` com o critério certo (impressão pessoal, número sem fonte, causalidade sem dado, generalização); 3 citações (máximo); 504 palavras; 53 s + 71 s; −16,3 LUFS | nenhum | — |
+| 4 | react, texto colado, **sem** confronto | post "2 litros de água obrigatórios" | 1ª tentativa: `SCRIPT_INVALID` (3 respostas fora do formato). Após correção: 5 itens (4 não verificáveis, 1 contestada por salto lógico — a anedota da avó); 465 palavras; 97 s + 61 s; −16,4 LUFS | rótulos de confronto usados sem confronto; 2 citações com moldura ("o autor decreta: '…'") — ambas sinalizadas pelo verificador de fidelidade | normalização automática de rótulos sem confronto; log com o motivo do validador; regra no prompt: citação contém só o trecho literal |
+
+| Critério (`docs/07 §3`) | Resultado |
+|---|---|
+| Afirmações sobre as fontes sem respaldo | 0 encontradas (nenhum episódio trouxe dado externo ao material) |
+| Citações ≤ 3 por fonte, ≤ 15 palavras, `role` correto | ok nos 4; 2 citações com moldura no ep. 4 foram sinalizadas ao revisor |
+| `verification` reflete o confronto / exame interno | ok, conferido item a item |
+| `verdict` honesto e proporcional, linguagem de episódio | ok ("Com base no que temos aqui / no material examinado…") |
+| Opinião separada de fato | ok (`opiniao` × `contexto`/`confronto`) |
+| Vozes: loudness | −16,3 a −16,5 LUFS (meta −16 ±2); escuta humana de cortes/pronúncia **pendente** |
+| Tempo (meta < 5 min para 5 min de episódio) | 2–3 min para episódios de 3 min no plano free do Render; 5 min ainda não medido |
+| `verificacao.md` e `fontes.md` | gerados e corretos |
+
+Pendências: ouvir os MP3 (pronúncia, números lidos em voz alta), medir um episódio de 5 min, testar ingestão do
+YouTube a partir do IP do Render.
 
 ## O que já foi verificado com material real (LLM simulado)
 

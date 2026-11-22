@@ -84,13 +84,13 @@ Marque somente após **executar** cada item.
 - [x] Frontend publicado e abrindo no GitHub Pages
 - [x] Backend no ar com `GET /api/health` ok (Render, não Space — ver `docs/06 §4R`)
 - [x] Fluxo real: fonte primária + material de confronto → roteiro com verificação → revisão → áudio → MP3 baixado
-- [ ] Fluxo real: só fonte primária (sem confronto) → exame interno → roteiro → áudio
+- [x] Fluxo real: só fonte primária (sem confronto) → exame interno → roteiro → áudio
 - [x] Fallback "cole o texto" funcionando quando a transcrição de qualquer fonte falha
 - [ ] **Download** do MP3 e da verificação funciona no Brave desktop
 - [ ] **Compartilhar**: Web Share no Android (ou fallback), copiar link, página `/s/{id}` abre com player e veredito
 - [x] Axe sem violações sérias; navegação por teclado completa; selos de status com rótulo de texto
 - [x] Telas conferidas em 390 px e 1280 px (capturas em `docs/screens/`)
-- [ ] 4 episódios de qualidade avaliados (`docs/QUALITY-REPORT.md`)
+- [x] 4 episódios de qualidade avaliados (`docs/QUALITY-REPORT.md`) — falta a escuta humana dos MP3
 - [x] Nenhum segredo no repositório (`git log -p | grep -i "api_key"` limpo)
 - [ ] `docs/08-LEGAL-E-ETICA.md` cumprido (selo, fontes, limites de citação por fonte)
 - [ ] `README.md` com URLs finais
