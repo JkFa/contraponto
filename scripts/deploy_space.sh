@@ -7,7 +7,11 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SPACE_NAME="${SPACE_NAME:-contraponto}"
 
-if ! command -v hf >/dev/null 2>&1; then
+if command -v hf >/dev/null 2>&1; then
+  hf() { command hf "$@"; }
+elif command -v uvx >/dev/null 2>&1; then
+  hf() { uvx -q --from huggingface_hub hf "$@"; }
+else
   echo "CLI 'hf' não encontrado. Rode: pip install -U huggingface_hub" >&2
   exit 1
 fi

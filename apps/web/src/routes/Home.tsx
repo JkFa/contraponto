@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { ApiError, createEpisode, health } from "../api/client";
+import { API_CONFIGURED, ApiError, createEpisode, health } from "../api/client";
 import type { CreateEpisodeForm, Mode, Tone } from "../api/types";
 import { BRAND } from "../brand";
 import { Composer } from "../components/Composer";
@@ -17,7 +17,7 @@ const TONES: { id: Tone; label: string }[] = [
   { id: "provocativo", label: "Provocativo, com respeito" },
 ];
 
-type Wake = "unknown" | "ok" | "waking" | "down";
+type Wake = "unknown" | "ok" | "waking" | "down" | "unconfigured";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -38,6 +38,10 @@ export default function Home() {
   const [wake, setWake] = useState<Wake>("unknown");
 
   useEffect(() => {
+    if (!API_CONFIGURED) {
+      setWake("unconfigured");
+      return;
+    }
     let done = false;
     const slow = window.setTimeout(() => { if (!done) setWake("waking"); }, 2500);
     health()
@@ -103,6 +107,12 @@ export default function Home() {
 
         {wake === "waking" && (
           <p className="banner" role="status">Acordando o estúdio… leva até um minuto na primeira vez.</p>
+        )}
+        {wake === "unconfigured" && (
+          <p className="banner" role="status">
+            O estúdio ainda não está conectado a este site, então ainda não dá para gerar episódios aqui. Para usar
+            agora, rode o projeto no seu computador (<code>make dev</code>).
+          </p>
         )}
         {wake === "down" && (
           <p className="banner banner--error" role="alert">

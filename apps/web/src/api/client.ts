@@ -3,7 +3,13 @@ import type {
 } from "./types";
 import { getGeminiKey } from "../lib/storage";
 
-export const API_URL: string = (import.meta.env.VITE_API_URL ?? "http://localhost:8000").replace(/\/$/, "");
+const envUrl = (import.meta.env.VITE_API_URL ?? "").trim();
+/** Backend base URL. Empty in a production build without VITE_API_URL (studio not configured yet). */
+export const API_URL: string = (envUrl || (import.meta.env.DEV ? "http://localhost:8000" : "")).replace(/\/$/, "");
+export const API_CONFIGURED = API_URL !== "";
+
+const NOT_CONFIGURED_MSG =
+  "O estúdio (backend) ainda não foi conectado a este site. Rode localmente com `make dev` ou aguarde a publicação.";
 
 export class ApiError extends Error {
   code: string;
@@ -18,6 +24,7 @@ export class ApiError extends Error {
 const NETWORK_MSG = "Não consegui falar com o estúdio. Confira sua conexão e tente de novo.";
 
 async function request<T>(path: string, init: RequestInit = {}, timeoutMs = 30_000): Promise<T> {
+  if (!API_CONFIGURED) throw new ApiError("NOT_CONFIGURED", NOT_CONFIGURED_MSG, 0);
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);
   let res: Response;

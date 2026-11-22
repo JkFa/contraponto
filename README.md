@@ -4,6 +4,26 @@ Gere um episódio de podcast com **duas vozes** que **examina, confronta e verif
 
 > Nome de trabalho. Custo zero: GitHub Pages + Hugging Face Space + free tiers.
 
+## Endereços
+
+| | URL | Estado |
+|---|---|---|
+| Frontend | https://jkfa.github.io/contraponto/ | publicado (GitHub Pages) |
+| Backend | `https://<usuario-hf>-contraponto.hf.space` | pronto para publicar: `make deploy-api` (precisa de login no Hugging Face) |
+| Repositório | https://github.com/JkFa/contraponto | público |
+
+Enquanto o backend não estiver publicado e ligado ao site (`VITE_API_URL`), a página publicada avisa que o estúdio
+ainda não está conectado. Localmente tudo funciona com `make mock` (sem chaves) ou `make dev` (com chave).
+
+### Para colocar no ar (passos do dono do projeto)
+
+1. `hf auth login` (token com permissão de escrita) e `make deploy-api`.
+2. No Space → Settings → *Variables and secrets*: secret `GEMINI_API_KEY` (de `aistudio.google.com`), opcional
+   `GROQ_API_KEY`; variables `ALLOWED_ORIGINS=https://jkfa.github.io,http://localhost:5173`,
+   `PUBLIC_BASE_URL=https://<usuario-hf>-contraponto.hf.space` e `FRONTEND_URL=https://jkfa.github.io/contraponto/`.
+3. `gh variable set VITE_API_URL --body "https://<usuario-hf>-contraponto.hf.space" --repo JkFa/contraponto`
+   e `gh workflow run deploy-web.yml --repo JkFa/contraponto`.
+
 ## Como funciona
 
 1. **Fonte primária** (obrigatória): cole um **link do YouTube**, um **texto** ou envie um **arquivo** (`.txt`, `.srt`, `.pdf`).
@@ -23,6 +43,8 @@ make setup
 cp .env.example .env     # preencha GEMINI_API_KEY
 make dev                 # web em :5173, api em :8000
 make mock                # sem chaves: respostas simuladas
+make test && make lint   # pytest + vitest; ruff + eslint + tsc
+make e2e                 # Playwright (usa o Google Chrome do sistema)
 ```
 
 Requisitos: Python 3.11+, Node 20+, FFmpeg.

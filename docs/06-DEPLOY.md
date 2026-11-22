@@ -193,9 +193,9 @@ npm i -g vercel && cd apps/web && vercel --prod
 
 ## 8. Checklist de publicação
 
-- [ ] Repo `JkFa/contraponto` criado e com push
-- [ ] Workflow de deploy do web verde e site abrindo em `https://jkfa.github.io/contraponto/`
-- [ ] Space criado, build verde, `GET /api/health` responde
+- [x] Repo `JkFa/contraponto` criado e com push
+- [x] Workflow de deploy do web verde e site abrindo em `https://jkfa.github.io/contraponto/`
+- [ ] Space criado, build verde, `GET /api/health` responde — imagem Docker validada localmente (22/11/2026, `/api/health` ok); falta `hf auth login` + `make deploy-api`
 - [ ] Secrets configurados (passo do usuário)
 - [ ] `VITE_API_URL` apontando para o Space; web redeployado
 - [ ] CORS testado a partir do site publicado

@@ -61,12 +61,12 @@
 - [ ] Fluxo completo local com chave real (se disponível), com e sem material de confronto, usando uma fonte primária real — **parcial (22/11/2026):** sem chave de LLM; rodado com YouTube real + edge-tts real + LLM mock, com e sem confronto: MP3 de 2 min 18 s, −16,4 LUFS, ID3 ok. Falta repetir com Gemini real
 
 ## M7 — Publicação
-- [ ] `gh repo create JkFa/contraponto --public --push`
-- [ ] Workflows `ci.yml` e `deploy-web.yml`; Pages ativado por `gh api`
-- [ ] `apps/api` com Dockerfile e front-matter; `scripts/deploy_space.sh`; `make deploy-api`
-- [ ] Publicar o Space (se `hf auth` estiver feito) ou deixar pronto e documentar
-- [ ] Configurar `VITE_API_URL` e redeploy do web
-- [ ] Teste do site publicado: CORS, fluxo completo (com e sem confronto), download e compartilhamento
+- [x] `gh repo create JkFa/contraponto --public --push`
+- [x] Workflows `ci.yml` e `deploy-web.yml`; Pages ativado por `gh api` (ambos verdes)
+- [x] `apps/api` com Dockerfile e front-matter; `scripts/deploy_space.sh`; `make deploy-api` (imagem testada localmente)
+- [x] Publicar o Space (se `hf auth` estiver feito) ou deixar pronto e documentar — `hf auth` não estava feito: pronto e documentado no README e em `docs/06`
+- [ ] Configurar `VITE_API_URL` e redeploy do web — depende da URL do Space (passo do usuário)
+- [ ] Teste do site publicado: CORS, fluxo completo (com e sem confronto), download e compartilhamento — depende do Space
 
 ## M8 — Qualidade final
 - [ ] 4 episódios reais avaliados (`docs/07 §3`) → `docs/QUALITY-REPORT.md`

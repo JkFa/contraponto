@@ -79,18 +79,18 @@ Registrar o resultado em `docs/QUALITY-REPORT.md` (tabela simples com data, mate
 
 Marque somente após **executar** cada item.
 
-- [ ] `make test` e `make lint` verdes
-- [ ] `make mock` roda o fluxo completo sem chaves, com e sem confronto
-- [ ] Frontend publicado e abrindo no GitHub Pages
+- [x] `make test` e `make lint` verdes
+- [x] `make mock` roda o fluxo completo sem chaves, com e sem confronto
+- [x] Frontend publicado e abrindo no GitHub Pages
 - [ ] Backend no Space com `GET /api/health` ok
 - [ ] Fluxo real: fonte primária + material de confronto → roteiro com verificação → revisão → áudio → MP3 baixado
 - [ ] Fluxo real: só fonte primária (sem confronto) → exame interno → roteiro → áudio
-- [ ] Fallback "cole o texto" funcionando quando a transcrição de qualquer fonte falha
+- [x] Fallback "cole o texto" funcionando quando a transcrição de qualquer fonte falha
 - [ ] **Download** do MP3 e da verificação funciona no Brave desktop
 - [ ] **Compartilhar**: Web Share no Android (ou fallback), copiar link, página `/s/{id}` abre com player e veredito
-- [ ] Axe sem violações sérias; navegação por teclado completa; selos de status com rótulo de texto
-- [ ] Telas conferidas em 390 px e 1280 px (capturas em `docs/screens/`)
+- [x] Axe sem violações sérias; navegação por teclado completa; selos de status com rótulo de texto
+- [x] Telas conferidas em 390 px e 1280 px (capturas em `docs/screens/`)
 - [ ] 4 episódios de qualidade avaliados (`docs/QUALITY-REPORT.md`)
-- [ ] Nenhum segredo no repositório (`git log -p | grep -i "api_key"` limpo)
+- [x] Nenhum segredo no repositório (`git log -p | grep -i "api_key"` limpo)
 - [ ] `docs/08-LEGAL-E-ETICA.md` cumprido (selo, fontes, limites de citação por fonte)
 - [ ] `README.md` com URLs finais
