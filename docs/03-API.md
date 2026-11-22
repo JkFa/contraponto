@@ -1,6 +1,6 @@
 # 03 — Contrato da API
 
-Base: `VITE_API_URL` (ex.: `https://jkfa-contraponto.hf.space`). Prefixo `/api`. Tudo em JSON, exceto onde indicado.
+Base: `VITE_API_URL` (ex.: `https://contraponto-api.onrender.com`). Prefixo `/api`. Tudo em JSON, exceto onde indicado.
 Backend e frontend **devem** bater com este documento; se mudar um, mude o outro e este arquivo no mesmo commit.
 
 ## 1. Tipos

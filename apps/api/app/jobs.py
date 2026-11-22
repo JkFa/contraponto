@@ -205,7 +205,7 @@ class JobManager:
                 self.cleanup()
 
     def to_episode(self, rec: EpisodeRecord) -> Episode:
-        base = self.settings.public_base_url.rstrip("/")
+        base = self.settings.base_url
         return Episode(
             id=rec.id,
             status=rec.status,
@@ -437,7 +437,7 @@ class JobManager:
         finally:
             for f in work.glob("t*.*"):
                 f.unlink(missing_ok=True)
-        base = self.settings.public_base_url.rstrip("/")
+        base = self.settings.base_url
         rec.audio = AudioInfo(
             url=f"{base}/api/episodes/{rec.id}/audio.mp3",
             duration_s=result.duration_s,

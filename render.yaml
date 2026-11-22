@@ -1,0 +1,35 @@
+# Render Blueprint: backend (FastAPI + FFmpeg) on the free Docker plan.
+# Dashboard → New → Blueprint → select this repository. Fill GEMINI_API_KEY (and optionally GROQ_API_KEY) when asked.
+services:
+  - type: web
+    name: contraponto-api
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: ./apps/api
+    healthCheckPath: /api/health
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - apps/api/**
+        - render.yaml
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: TTS_PROVIDER
+        value: edge
+      - key: ALLOWED_ORIGINS
+        value: https://jkfa.github.io,http://localhost:5173
+      - key: FRONTEND_URL
+        value: https://jkfa.github.io/contraponto/
+      - key: DATA_DIR
+        value: /tmp/contraponto
+      - key: EPISODE_TTL_HOURS
+        value: "24"
+      - key: MAX_CONCURRENT_RENDERS
+        value: "1"

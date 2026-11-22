@@ -2,14 +2,14 @@
 
 Gere um episódio de podcast com **duas vozes** que **examina, confronta e verifica** as informações de um vídeo, texto ou arquivo — comparando-as, se você quiser, com um material próprio que você fornece. Revise o roteiro, baixe o MP3 e compartilhe.
 
-> Nome de trabalho. Custo zero: GitHub Pages + Hugging Face Space + free tiers.
+> Nome de trabalho. Custo zero: GitHub Pages + Render (plano free) + free tiers.
 
 ## Endereços
 
 | | URL | Estado |
 |---|---|---|
 | Frontend | https://jkfa.github.io/contraponto/ | publicado (GitHub Pages) |
-| Backend | `https://<usuario-hf>-contraponto.hf.space` | pronto para publicar: `make deploy-api` (precisa de login no Hugging Face) |
+| Backend | `https://contraponto-api.onrender.com` (confirmar após criar) | pronto para publicar no Render via `render.yaml` |
 | Repositório | https://github.com/JkFa/contraponto | público |
 
 Enquanto o backend não estiver publicado e ligado ao site (`VITE_API_URL`), a página publicada avisa que o estúdio
@@ -17,12 +17,14 @@ ainda não está conectado. Localmente tudo funciona com `make mock` (sem chaves
 
 ### Para colocar no ar (passos do dono do projeto)
 
-1. `hf auth login` (token com permissão de escrita) e `make deploy-api`.
-2. No Space → Settings → *Variables and secrets*: secret `GEMINI_API_KEY` (de `aistudio.google.com`), opcional
-   `GROQ_API_KEY`; variables `ALLOWED_ORIGINS=https://jkfa.github.io,http://localhost:5173`,
-   `PUBLIC_BASE_URL=https://<usuario-hf>-contraponto.hf.space` e `FRONTEND_URL=https://jkfa.github.io/contraponto/`.
-3. `gh variable set VITE_API_URL --body "https://<usuario-hf>-contraponto.hf.space" --repo JkFa/contraponto`
+1. Em https://render.com (login com GitHub): **New → Blueprint** → repositório `JkFa/contraponto`.
+2. Quando pedir, colar o secret `GEMINI_API_KEY` (crie em `aistudio.google.com`); `GROQ_API_KEY` é opcional.
+3. Com o deploy verde, ligar o site ao backend:
+   `gh variable set VITE_API_URL --body "https://<url-do-serviço>.onrender.com" --repo JkFa/contraponto`
    e `gh workflow run deploy-web.yml --repo JkFa/contraponto`.
+
+Detalhes e limites do plano free em [`docs/06-DEPLOY.md §4R`](docs/06-DEPLOY.md). O Hugging Face Space continua
+possível (`make deploy-api`), mas desde 22/11/2026 exige assinatura PRO para Docker.
 
 ## Como funciona
 
@@ -53,7 +55,7 @@ Requisitos: Python 3.11+, Node 20+, FFmpeg.
 
 ```
 apps/web    # React + Vite (GitHub Pages)
-apps/api    # FastAPI (Hugging Face Space, Docker)
+apps/api    # FastAPI (Render, Docker)
 docs/       # PRD, arquitetura, API, prompts, design, deploy, testes
 CLAUDE.md   # instruções para o Claude Code
 ```

@@ -10,4 +10,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY --chown=user . .
 ENV PORT=7860 DATA_DIR=/tmp/contraponto
 EXPOSE 7860
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "7860", "--proxy-headers", "--forwarded-allow-ips", "*"]
+# PORT is set by Render (default 10000); Hugging Face uses 7860.
+CMD ["sh", "-c", "exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-7860} --proxy-headers --forwarded-allow-ips '*'"]

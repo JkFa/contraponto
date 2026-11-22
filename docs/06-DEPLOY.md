@@ -5,12 +5,12 @@
 | Camada | Plataforma | Por quê |
 |---|---|---|
 | Frontend | **GitHub Pages** | Estático, grátis, sem domínio próprio, sem restrição de uso comercial, tudo no GitHub do usuário (`JkFa`) |
-| Backend | **Hugging Face Space (Docker, CPU basic)** | Grátis, aceita Python + FFmpeg, HTTPS pronto |
+| Backend | **Render (Docker, plano free)** | Grátis, aceita Python + FFmpeg, HTTPS pronto. Substitui o Hugging Face Space, que desde 22/11/2026 exige PRO para Spaces Docker (ver §4) |
 | Alternativa de frontend | **Vercel** | Só se o usuário pedir. O plano Hobby é restrito a uso não comercial |
 
 URLs esperadas:
 - Frontend: `https://jkfa.github.io/contraponto/`
-- Backend: `https://<usuario-hf>-contraponto.hf.space`
+- Backend: `https://contraponto-api.onrender.com` (o Render pode acrescentar um sufixo se o nome estiver ocupado)
 
 ## 2. Repositório (automatizar com `gh`)
 
@@ -79,7 +79,29 @@ gh variable set VITE_API_URL --body "https://<usuario-hf>-contraponto.hf.space" 
 gh workflow run deploy-web.yml --repo JkFa/contraponto
 ```
 
-## 4. Backend → Hugging Face Space (Docker)
+## 4R. Backend → Render (Docker, plano free) — caminho atual
+
+Limites do plano free (conferidos em 22/11/2026 em https://render.com/docs/free): 750 h/mês por workspace, dorme após
+15 min sem uso (~1 min para acordar; a UI mostra "Acordando o estúdio…"), 512 MB de RAM e CPU fraca (~0,1),
+sem disco persistente (por isso o TTL de 24 h e o aviso "baixe para guardar"). Por isso `MAX_CONCURRENT_RENDERS=1`.
+
+Passos (do dono do projeto, uma vez):
+1. Criar conta em https://render.com (login com GitHub) e autorizar o repositório `JkFa/contraponto`.
+2. Dashboard → **New → Blueprint** → escolher o repositório. O `render.yaml` da raiz cria o serviço `contraponto-api`.
+3. Quando o Render pedir, preencher o secret `GEMINI_API_KEY` (e, se quiser, `GROQ_API_KEY`).
+4. Esperar o deploy ficar verde e conferir `https://<url-do-serviço>/api/health`.
+5. Ligar o site: `gh variable set VITE_API_URL --body "https://<url-do-serviço>" --repo JkFa/contraponto`
+   e `gh workflow run deploy-web.yml --repo JkFa/contraponto`.
+
+Notas:
+- `PUBLIC_BASE_URL` não precisa ser definida: o backend usa `RENDER_EXTERNAL_URL`, injetada pelo Render.
+- O Dockerfile escuta em `$PORT` (o Render define 10000); no Hugging Face o padrão continua 7860.
+- Deploys seguintes são automáticos a cada push que mexa em `apps/api/**` (`buildFilter`).
+
+## 4. Backend → Hugging Face Space (Docker) — alternativa (exige PRO desde 22/11/2026)
+
+> Em 22/11/2026 `hf repos create … --type space --sdk docker` respondeu **402 Payment Required**: "hosting Gradio and
+> Docker Spaces on free cpu-basic requires a PRO subscription". Esta seção só vale para quem assinar o PRO.
 
 ### 4.1 `apps/api/Dockerfile`
 
@@ -195,8 +217,8 @@ npm i -g vercel && cd apps/web && vercel --prod
 
 - [x] Repo `JkFa/contraponto` criado e com push
 - [x] Workflow de deploy do web verde e site abrindo em `https://jkfa.github.io/contraponto/`
-- [ ] Space criado, build verde, `GET /api/health` responde — imagem Docker validada localmente (22/11/2026, `/api/health` ok); falta `hf auth login` + `make deploy-api`
+- [ ] Backend (Render) criado, build verde, `GET /api/health` responde — imagem Docker validada localmente (22/11/2026, `/api/health` ok); falta `hf auth login` + `make deploy-api`
 - [ ] Secrets configurados (passo do usuário)
-- [ ] `VITE_API_URL` apontando para o Space; web redeployado
+- [ ] `VITE_API_URL` apontando para o backend; web redeployado
 - [ ] CORS testado a partir do site publicado
 - [ ] Fluxo completo com um vídeo real, no site publicado

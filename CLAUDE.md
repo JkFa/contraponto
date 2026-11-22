@@ -10,7 +10,7 @@ Aplicação web que recebe **uma fonte primária** (link do YouTube, texto colad
 **O núcleo do produto não é resumir — é examinar.** Toda geração de roteiro passa por um **prompt mestre** (ver `docs/04-PIPELINE-E-PROMPTS.md §3`) que obriga a IA a: **extrair** as afirmações centrais da fonte primária, **confrontá-las** com o material de confronto (quando houver) ou com critérios de consistência interna (quando não houver), **examinar** a força de cada afirmação e **verificar** o que se sustenta, o que é contestado e o que não é verificável — produzindo um **veredito** no fim do episódio. Isso vale nos dois modos (`crítica` e `react`); o modo decide só se a tese condutora é do usuário ou da IA.
 
 - Sem avatar, sem download/edição do vídeo original (evita GPU e Content ID).
-- Custo zero: Gemini/Groq free tier, `edge-tts`, FFmpeg, GitHub Pages, Hugging Face Spaces.
+- Custo zero: Gemini/Groq free tier, `edge-tts`, FFmpeg, GitHub Pages, Render (plano free).
 - Idioma da interface e dos episódios: **pt-BR**. Código, commits e nomes de arquivos: **inglês**. Documentação: **português**.
 
 Documentos de apoio (leia sob demanda, na ordem):
@@ -58,7 +58,7 @@ Regras:
 | Decisão | Escolha | Motivo |
 |---|---|---|
 | Frontend | **GitHub Pages** (SPA estática, deploy por GitHub Actions) | O usuário prefere GitHub, não tem domínio, sem limite de uso não comercial |
-| Backend | **FastAPI em Docker no Hugging Face Space** (CPU gratuita) | Precisa de Python + FFmpeg; Vercel/Pages não rodam isso |
+| Backend | **FastAPI em Docker no Render** (plano free, `render.yaml`) | Precisa de Python + FFmpeg. **Mudou em 22/11/2026:** o Hugging Face passou a exigir PRO para Spaces Docker (erro 402); o Space segue como alternativa paga (`make deploy-api`) |
 | Alternativa de frontend | Vercel (documentada em `docs/06-DEPLOY.md`) | Só se o usuário pedir |
 | LLM | Gemini (AI Studio, free tier) → fallback Groq | Contexto longo; JSON estruturado |
 | TTS | `edge-tts` → fallback Piper local | Edge-TTS é API não oficial; precisa de plano B |

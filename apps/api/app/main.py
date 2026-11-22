@@ -385,7 +385,7 @@ def create_app(settings: Settings | None = None, jobs: JobManager | None = None)
             rec = manager.get(episode_id)
         except ApiError:
             return HTMLResponse(render_not_found(settings.frontend_url), status_code=404)
-        base = settings.public_base_url.rstrip("/")
+        base = settings.base_url
         html = render_share_page(
             manager.to_episode(rec),
             audio_url=f"{base}/api/episodes/{rec.id}/audio.mp3",

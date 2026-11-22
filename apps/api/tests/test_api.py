@@ -411,3 +411,11 @@ def test_keepalive_constant() -> None:
 
     assert main.KEEPALIVE_S == 15.0
     assert asyncio is not None
+
+
+def test_base_url_fallbacks(tmp_path) -> None:
+    assert make_settings(tmp_path, public_base_url="").base_url == "http://localhost:8000"
+    s = make_settings(tmp_path, public_base_url="", render_external_url="https://x.onrender.com/")
+    assert s.base_url == "https://x.onrender.com"
+    s = make_settings(tmp_path, public_base_url="https://api.example/", render_external_url="https://x")
+    assert s.base_url == "https://api.example"

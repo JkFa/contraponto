@@ -4,7 +4,7 @@
 
 ```
 ┌─────────────────────────┐        HTTPS (CORS restrito)       ┌──────────────────────────────┐
-│  apps/web (GitHub Pages)│ ─────────────────────────────────▶ │ apps/api (HF Space, Docker)  │
+│  apps/web (GitHub Pages)│ ─────────────────────────────────▶ │ apps/api (Render, Docker)    │
 │  React + Vite + TS      │ ◀───── JSON + SSE + MP3 ────────── │ FastAPI + FFmpeg             │
 └─────────────────────────┘                                    └───────┬──────────────────────┘
                                                                        │
@@ -130,6 +130,6 @@ Ver `.env.example` em `docs/06-DEPLOY.md §5`.
 ## 8. Por que essa divisão
 
 - **GitHub Pages** não executa Python/FFmpeg → backend separado é necessário.
-- **Hugging Face Space (Docker)** é gratuito, aceita FFmpeg e Python e expõe HTTPS.
+- **Render (Docker, plano free)** aceita FFmpeg e Python e expõe HTTPS. (Era o Hugging Face Space, que desde 22/11/2026 exige PRO para Docker.)
 - Se o Space dormir (inatividade), a primeira chamada acorda em ~30–60 s: a UI deve mostrar "Acordando o estúdio…" quando `GET /api/health` demorar.
 - A ingestão é **genérica por papel** (`role: "primaria" | "confronto"`), não duplicada em código: o mesmo módulo `ingest/youtube.py` e `ingest/files.py` atende as duas fontes, o que mantém a base de código pequena mesmo com a segunda entrada.

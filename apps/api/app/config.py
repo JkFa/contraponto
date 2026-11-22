@@ -35,7 +35,8 @@ class Settings(BaseSettings):
     mock_tts: bool = False
 
     allowed_origins: str = "http://localhost:5173"
-    public_base_url: str = "http://localhost:8000"
+    public_base_url: str = ""
+    render_external_url: str = ""  # injected by Render; used when PUBLIC_BASE_URL is empty
     frontend_url: str = "https://jkfa.github.io/contraponto/"
     data_dir: Path = Path("./.data")
     episode_ttl_hours: int = 24
@@ -61,6 +62,18 @@ class Settings(BaseSettings):
         if isinstance(value, str) and not value.strip():
             return False
         return value
+
+    @field_validator("public_base_url", mode="after")
+    @classmethod
+    def _strip_base(cls, value: str) -> str:
+        return value.strip().rstrip("/")
+
+    @property
+    def base_url(self) -> str:
+        """Public URL of this backend (share links, audio URLs)."""
+        return (
+            self.public_base_url or self.render_external_url.rstrip("/") or "http://localhost:8000"
+        )
 
     @property
     def origins(self) -> list[str]:
