@@ -9,7 +9,7 @@ from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _DEFAULTS = {
-    "gemini_model": "gemini-2.5-flash",
+    "gemini_model": "gemini-3.6-flash",
     "groq_model": "llama-3.3-70b-versatile",
     "voice_host_1": "pt-BR-AntonioNeural",
     "voice_host_2": "pt-BR-FranciscaNeural",
