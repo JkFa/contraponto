@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Publishes apps/api to a Hugging Face Space (Docker). Idempotent.
-# Requires: `pip install -U huggingface_hub` (CLI `hf`) and `hf auth login` with a write token.
-# Usage: HF_USER=<your-hf-username> ./scripts/deploy_space.sh   (HF_USER is detected if omitted)
+# Requires the `hf` CLI (or `uvx`, used as fallback) and `hf auth login` with a write token.
+# Usage: ./scripts/deploy_space.sh          (HF_USER and SPACE_NAME can override the defaults)
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -15,30 +15,25 @@ else
   echo "CLI 'hf' não encontrado. Rode: pip install -U huggingface_hub" >&2
   exit 1
 fi
-if ! hf auth whoami >/dev/null 2>&1; then
+
+WHOAMI="$(hf auth whoami 2>/dev/null | grep -v '^Hint' | head -n1 || true)"
+if [ -z "$WHOAMI" ] || echo "$WHOAMI" | grep -qi "not logged"; then
   echo "Faça login primeiro: hf auth login (token com permissão de escrita)" >&2
   exit 1
 fi
-HF_USER="${HF_USER:-$(hf auth whoami | head -n1 | sed -E 's/^(user: *)?//; s/ .*//')}"
+# whoami prints "user=<name>" (newer CLI) or "<name>" (older CLI)
+DETECTED="$(echo "$WHOAMI" | sed -E 's/^user=//; s/^user: *//; s/[[:space:]].*$//')"
+HF_USER="${HF_USER:-$DETECTED}"
 REPO="${HF_USER}/${SPACE_NAME}"
 echo "Space: ${REPO}"
 
-hf repo create "${SPACE_NAME}" --repo-type space --space-sdk docker --exist-ok >/dev/null 2>&1 \
-  || hf repo create "${SPACE_NAME}" --type space --space-sdk docker >/dev/null 2>&1 \
-  || echo "(o Space já existe ou foi criado antes)"
+hf repos create "${REPO}" --type space --sdk docker --exist-ok >/dev/null
 
-WORK="$(mktemp -d)"
-trap 'rm -rf "$WORK"' EXIT
-git clone --quiet "https://huggingface.co/spaces/${REPO}" "$WORK/space"
-rsync -a --delete --exclude '.git' --exclude '__pycache__' --exclude '.venv' --exclude '.data' \
-  --exclude '.pytest_cache' --exclude '.ruff_cache' "$ROOT/apps/api/" "$WORK/space/"
-cd "$WORK/space"
-git add -A
-if git diff --cached --quiet; then
-  echo "Nada mudou; Space já está atualizado."
-else
-  git commit --quiet -m "deploy $(cd "$ROOT" && git rev-parse --short HEAD)"
-  git push --quiet
-  echo "Publicado. Acompanhe o build em https://huggingface.co/spaces/${REPO}"
-fi
-echo "URL do backend: https://${HF_USER,,}-${SPACE_NAME}.hf.space"
+hf upload "${REPO}" "$ROOT/apps/api" . --repo-type space \
+  --exclude ".venv/*" --exclude "**/__pycache__/*" --exclude ".data/*" \
+  --exclude ".pytest_cache/*" --exclude ".ruff_cache/*" --exclude "tests/*" \
+  --commit-message "deploy $(cd "$ROOT" && git rev-parse --short HEAD)"
+
+SUB="$(echo "${HF_USER}-${SPACE_NAME}" | tr '[:upper:]_.' '[:lower:]--')"
+echo "Publicado. Build: https://huggingface.co/spaces/${REPO}"
+echo "URL do backend: https://${SUB}.hf.space"
