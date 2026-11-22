@@ -175,7 +175,9 @@ async def _call_chain(
         try:
             return await provider.generate(system, user, ctx), provider.name
         except LLMError as exc:
-            log.warning("llm provider=%s failed code=%s", provider.name, exc.code)
+            log.warning(
+                "llm provider=%s failed code=%s detail=%s", provider.name, exc.code, exc.detail
+            )
             if exc.code == "CONTENT_REFUSED":
                 raise
             last = exc
