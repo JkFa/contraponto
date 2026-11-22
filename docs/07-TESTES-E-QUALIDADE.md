@@ -85,7 +85,7 @@ Marque somente após **executar** cada item.
 - [x] Backend no ar com `GET /api/health` ok (Render, não Space — ver `docs/06 §4R`)
 - [x] Fluxo real: fonte primária + material de confronto → roteiro com verificação → revisão → áudio → MP3 baixado
 - [x] Fluxo real: só fonte primária (sem confronto) → exame interno → roteiro → áudio
-- [x] Fallback "cole o texto" funcionando quando a transcrição de qualquer fonte falha
+- [x] Fallback "cole o texto" funcionando quando a transcrição de qualquer fonte falha (confirmado também no site publicado: o YouTube bloqueia o IP do Render)
 - [ ] **Download** do MP3 e da verificação funciona no Brave desktop
 - [ ] **Compartilhar**: Web Share no Android (ou fallback), copiar link, página `/s/{id}` abre com player e veredito
 - [x] Axe sem violações sérias; navegação por teclado completa; selos de status com rótulo de texto

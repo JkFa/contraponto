@@ -190,9 +190,15 @@ function PasteFallback({ id, code, message }: { id: string; code: string; messag
           {error && <p className="field__error" role="alert">{error}</p>}
         </>
       ) : (
-        <div className="actions-row">
-          <Link className="btn btn--primary" to="/">Voltar e colar o texto</Link>
-        </div>
+        <>
+          <p className="dim">
+            No YouTube, abra o vídeo, toque em “…mais” na descrição e depois em “Mostrar transcrição”. Copie o texto e
+            cole na aba Texto da tela inicial.
+          </p>
+          <div className="actions-row">
+            <Link className="btn btn--primary" to="/">Voltar e colar o texto</Link>
+          </div>
+        </>
       )}
     </section>
   );

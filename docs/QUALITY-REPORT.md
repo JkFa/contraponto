@@ -25,8 +25,13 @@ servidor. Todos passaram pelo validador; verificação conferida item a item man
 | Tempo (meta < 5 min para 5 min de episódio) | 2–3 min para episódios de 3 min no plano free do Render; 5 min ainda não medido |
 | `verificacao.md` e `fontes.md` | gerados e corretos |
 
-Pendências: ouvir os MP3 (pronúncia, números lidos em voz alta), medir um episódio de 5 min, testar ingestão do
-YouTube a partir do IP do Render.
+**YouTube a partir do servidor (22/11/2026):** um link real do YouTube enviado ao backend no Render resultou em
+`TRANSCRIPT_UNAVAILABLE` — o YouTube bloqueia a leitura de transcrições a partir do IP do Render (risco já previsto no
+PRD). O fallback funciona: a tela "Esse vídeo não deixou a gente ler a transcrição" aparece no site e o usuário cola o
+texto. A aba "Link do YouTube" agora avisa isso de antemão. A partir de uma máquina residencial (`make dev`), a
+ingestão do YouTube funciona (testado localmente).
+
+Pendências: ouvir os MP3 (pronúncia, números lidos em voz alta), medir um episódio de 5 min.
 
 ## O que já foi verificado com material real (LLM simulado)
 

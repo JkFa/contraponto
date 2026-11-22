@@ -109,6 +109,10 @@ export function SourceField({ label, draft, onChange, disabled, textPlaceholder,
               placeholder="https://www.youtube.com/watch?v=…" value={draft.url} disabled={disabled}
               aria-invalid={visibleError ? true : undefined} aria-describedby={visibleError ? errId : undefined}
               onChange={(e) => onChange({ ...draft, url: e.target.value })} onBlur={() => setTouched(true)} />
+            <p className="field__hint">
+              O YouTube às vezes bloqueia a leitura da transcrição pelo estúdio. Se acontecer, a gente pede para você colar o
+              texto.
+            </p>
           </>
         )}
         {draft.tab === "text" && (

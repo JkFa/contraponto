@@ -37,6 +37,13 @@ possível (`make deploy-api`), mas desde 22/11/2026 exige assinatura PRO para Do
 6. **Gere o áudio** e acompanhe o progresso.
 7. **Baixe o MP3**, o roteiro, a tabela de verificação e as fontes, ou **compartilhe** o link do episódio.
 
+## Limites conhecidos
+
+- **YouTube no site publicado:** o YouTube bloqueia a leitura de transcrições a partir do servidor (Render). No site,
+  use a aba Texto (cole a transcrição) ou rode localmente com `make dev`, onde o link do YouTube funciona.
+- **Plano gratuito:** o backend dorme após 15 min sem uso (~1 min para acordar) e os episódios somem a cada reinício
+  ou após 24 h. Baixe o MP3 para guardar.
+
 ## Rodando localmente
 
 ```bash
