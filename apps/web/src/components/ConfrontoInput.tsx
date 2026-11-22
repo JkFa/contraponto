@@ -52,6 +52,10 @@ export function ConfrontoInput({ open, draft, onOpenChange, onChange, disabled, 
       <SourceField label="Material de confronto" draft={draft} onChange={onChange} disabled={disabled}
         showErrors={showErrors}
         textPlaceholder="Cole um artigo divergente, dados oficiais, uma errata ou suas notas." />
+      <p className="block__hint">
+        Este material também passa pelo serviço de IA gratuito, que pode usá-lo para melhorar seus produtos. Não envie
+        nada confidencial.
+      </p>
     </section>
   );
 }

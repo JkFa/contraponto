@@ -55,10 +55,10 @@
 - [x] Testes vitest + Playwright (modo mock, com e sem confronto) + axe — Playwright usa o Google Chrome do sistema (`channel: "chrome"`)
 
 ## M6 — Integração e endurecimento
-- [ ] Rate limit, limites de tamanho/duração por fonte, BYOK por header, logs sem conteúdo
-- [ ] CORS restrito por `ALLOWED_ORIGINS`
-- [ ] Texto legal e selos (`docs/08 §9`) na UI, em `sources.md`, `verification.md` e na página pública
-- [ ] Fluxo completo local com chave real (se disponível), com e sem material de confronto, usando uma fonte primária real
+- [x] Rate limit, limites de tamanho/duração por fonte, BYOK por header, logs sem conteúdo
+- [x] CORS restrito por `ALLOWED_ORIGINS`
+- [x] Texto legal e selos (`docs/08 §9`) na UI, em `sources.md`, `verification.md` e na página pública
+- [ ] Fluxo completo local com chave real (se disponível), com e sem material de confronto, usando uma fonte primária real — **parcial (22/11/2026):** sem chave de LLM; rodado com YouTube real + edge-tts real + LLM mock, com e sem confronto: MP3 de 2 min 18 s, −16,4 LUFS, ID3 ok. Falta repetir com Gemini real
 
 ## M7 — Publicação
 - [ ] `gh repo create JkFa/contraponto --public --push`
