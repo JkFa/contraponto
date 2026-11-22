@@ -31,7 +31,38 @@ PRD). O fallback funciona: a tela "Esse vídeo não deixou a gente ler a transcr
 texto. A aba "Link do YouTube" agora avisa isso de antemão. A partir de uma máquina residencial (`make dev`), a
 ingestão do YouTube funciona (testado localmente).
 
-Pendências: ouvir os MP3 (pronúncia, números lidos em voz alta), medir um episódio de 5 min.
+## Episódio de 5 min (22/11/2026)
+
+React com confronto (redes sociais e saúde mental, materiais fictícios): roteiro em 64 s + áudio em 105 s =
+**169 s no total** para um episódio de **4 min 17 s** (meta < 5 min ✔). 625 palavras (mín. 600), 5 afirmações
+verificadas contra o confronto (3 contestadas, 2 parciais), 4 citações (2 por fonte, `role` corretos), nenhum aviso de
+fidelidade, veredito proporcional ("levanta uma preocupação legítima… mas…"), −16,5 LUFS.
+
+## Escuta automatizada (proxy da escuta humana)
+
+Os MP3 dos episódios 2–4 foram transcritos com Whisper (`small`, pt) e comparados palavra a palavra com o texto
+enviado às vozes (`tts_prepare`):
+
+| Episódio | Palavras esperadas | Ouvidas | Erro por palavra | Trechos faltando/sobrando (≥ 3 palavras) |
+|---|---|---|---|---|
+| 2 | 449 | 442 | ≈ 6,0 % | nenhum |
+| 3 | 507 | 502 | ≈ 3,9 % | nenhum |
+| 4 | 466 | 463 | ≈ 3,0 % | nenhum |
+
+- **Sem cortes:** nenhuma fala ou trecho sumiu.
+- **Números:** quase todas as "diferenças" são o Whisper escrevendo por algarismos o que a voz leu por extenso
+  ("quarenta por cento" → "40", "noventa e oito" → "98"), ou seja, os números foram lidos em voz alta corretamente.
+- Diferenças restantes (ex.: "como justificativa" → "para a certificativa", "Foco mais" → "focomais") parecem erro do
+  reconhecedor, não da voz — **confirmar na escuta humana**.
+
+## Download no navegador
+
+Teste E2E (Playwright, Chromium — mesmo motor do Brave e do Chrome) clica em **Baixar MP3** e em **Verificação (.md)**
+e confirma um download real (`.mp3` com conteúdo; `verificacao.md` com o veredito).
+
+Pendências que dependem de pessoa/aparelho: escuta humana dos MP3 (pronúncia, naturalidade), download no **Brave**
+propriamente dito e **Web Share no Android** (a API não existe no Chrome de desktop Linux; a ordem de fallback
+arquivo → link → menu está coberta por testes unitários).
 
 ## O que já foi verificado com material real (LLM simulado)
 

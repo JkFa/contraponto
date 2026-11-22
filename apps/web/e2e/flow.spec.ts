@@ -87,12 +87,21 @@ for (const vp of VIEWPORTS) {
       await shot(page, `episode-${vp.name}`);
 
       const mp3 = page.getByRole("link", { name: /Baixar MP3/ });
+      // A real browser download (Chromium engine, as in Brave/Chrome), not just headers.
+      const [download] = await Promise.all([page.waitForEvent("download"), mp3.click()]);
+      expect(download.suggestedFilename()).toMatch(/\.mp3$/);
+      expect((await import("node:fs")).statSync((await download.path())!).size).toBeGreaterThan(1000);
       const href = await mp3.getAttribute("href");
       const res = await page.request.get(href!);
       expect(res.headers()["content-type"]).toBe("audio/mpeg");
       expect(res.headers()["content-disposition"]).toContain("attachment");
-      const ver = await page.request.get(await page.getByRole("link", { name: "Verificação (.md)" }).getAttribute("href") as string);
-      expect(await ver.text()).toContain("**Veredito:**");
+      const [verDownload] = await Promise.all([
+        page.waitForEvent("download"),
+        page.getByRole("link", { name: "Verificação (.md)" }).click(),
+      ]);
+      expect(verDownload.suggestedFilename()).toBe("verificacao.md");
+      const verText = (await import("node:fs")).readFileSync((await verDownload.path())!, "utf-8");
+      expect(verText).toContain("**Veredito:**");
 
       await page.goto("/#/historico");
       await expect(page.getByRole("heading", { name: "Histórico" })).toBeVisible();
