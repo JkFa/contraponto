@@ -326,3 +326,45 @@ def test_system_prompt_states_minimum_words() -> None:
     system = prompts.build_system(("Davi", "Lia"), "analitico", 750)
     assert "750 palavras" in system and "NUNCA menos de 637 palavras" in system
     assert "cerca de 18 falas" in system
+
+
+def test_label_mistakes_without_confronto_are_normalized() -> None:
+    c = ctx(False)
+    data = good(c)
+    data["verification"][0]["evidence_role"] = "confronto"
+    data["verification"][1]["evidence_role"] = "primaria"
+    data["turns"].insert(
+        2,
+        {
+            "speaker": "HOST_2",
+            "kind": "confronto",
+            "text": "Mas há outro lado.",
+            "role": "confronto",
+        },
+    )
+    for t in data["turns"]:
+        t["speaker"] = "HOST_1"
+    for i, t in enumerate(data["turns"]):
+        t["speaker"] = "HOST_1" if i % 2 == 0 else "HOST_2"
+        if t["kind"] == "citacao":
+            t.pop("role")
+    fake = Scripted(data)
+    script, _ = run(generate_script([fake], c))
+    assert len(fake.calls) == 1  # no repair round needed
+    assert all(v.evidence_role == "interna" for v in script.verification)
+    assert not any(t.kind == "confronto" for t in script.turns)
+    assert all(t.role == "primaria" for t in script.turns if t.kind == "citacao")
+
+
+def test_labels_untouched_with_confronto() -> None:
+    from app.script_service import normalize_labels
+
+    data = {
+        "verification": [{"evidence_role": "confronto"}],
+        "turns": [{"kind": "confronto", "role": "confronto"}],
+    }
+    normalize_labels(data, has_confronto=True)
+    assert data == {
+        "verification": [{"evidence_role": "confronto"}],
+        "turns": [{"kind": "confronto", "role": "confronto"}],
+    }

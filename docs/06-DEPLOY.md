@@ -94,6 +94,10 @@ Passos (do dono do projeto, uma vez):
    e `gh workflow run deploy-web.yml --repo JkFa/contraponto`.
 
 Notas:
+- **Estado atual (22/11/2026):** serviço criado a partir da URL pública do repositório (sem conectar o GitHub ao
+  Render). Consequência: **não há deploy automático** — após mudar `apps/api`, usar *Manual Deploy → Deploy latest
+  commit* no painel (ou conectar o GitHub ao Render para ativar o `autoDeploy`).
+- Cada deploy reinicia o servidor e apaga episódios em memória/disco (comportamento esperado do plano free).
 - `PUBLIC_BASE_URL` não precisa ser definida: o backend usa `RENDER_EXTERNAL_URL`, injetada pelo Render.
 - O Dockerfile escuta em `$PORT` (o Render define 10000); no Hugging Face o padrão continua 7860.
 - Deploys seguintes são automáticos a cada push que mexa em `apps/api/**` (`buildFilter`).
@@ -217,8 +221,8 @@ npm i -g vercel && cd apps/web && vercel --prod
 
 - [x] Repo `JkFa/contraponto` criado e com push
 - [x] Workflow de deploy do web verde e site abrindo em `https://jkfa.github.io/contraponto/`
-- [ ] Backend (Render) criado, build verde, `GET /api/health` responde — imagem Docker validada localmente (22/11/2026, `/api/health` ok); falta `hf auth login` + `make deploy-api`
-- [ ] Secrets configurados (passo do usuário)
-- [ ] `VITE_API_URL` apontando para o backend; web redeployado
-- [ ] CORS testado a partir do site publicado
+- [x] Backend (Render) criado, build verde, `GET /api/health` responde — `https://contraponto-api-fgcv.onrender.com` — imagem Docker validada localmente (22/11/2026, `/api/health` ok); falta `hf auth login` + `make deploy-api`
+- [x] Secrets configurados (passo do usuário) — `GEMINI_API_KEY` no Render
+- [x] `VITE_API_URL` apontando para o backend; web redeployado
+- [x] CORS testado a partir do site publicado
 - [ ] Fluxo completo com um vídeo real, no site publicado

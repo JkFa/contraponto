@@ -267,6 +267,7 @@ async def generate_script(
                 raise ScriptError("CONTENT_REFUSED")
             data["hosts"] = {"HOST_1": ctx.hosts[0], "HOST_2": ctx.hosts[1]}
             data["fidelity_notes"] = []
+            normalize_labels(data, has_confronto=confronto is not None)
             script = Script.model_validate(data)
             report = check_rules(script, primary, confronto, ctx.duration_min)
             if not report.hard:
@@ -277,7 +278,8 @@ async def generate_script(
         except (ValueError, ValidationError) as exc:
             errors = _describe(exc)
         last_errors = errors
-        log.info("script attempt=%d invalid errors=%d", attempt, len(errors))
+        # Validator messages name rules and turn numbers only, never user content.
+        log.info("script attempt=%d invalid errors=%s", attempt, " | ".join(errors)[:800])
         if attempt < MAX_REPAIRS:
             user = base_user + prompts.build_repair(raw, errors)
 
@@ -291,6 +293,30 @@ async def generate_script(
         f"Aviso do validador: {s}" for s in report.soft
     ]
     return script, provider_name
+
+
+def normalize_labels(data: dict[str, object], has_confronto: bool) -> None:
+    """Fix label-only mistakes in place, without touching what is said.
+
+    Without a confronto source, "confronto" can only be a mislabel: evidence becomes "interna",
+    confronto turns become the episode's own analysis ("opiniao"), and quotes can only come from
+    the primary source. Missing roles on quotes default to "primaria" when there is one source.
+    """
+    if has_confronto:
+        return
+    for item in data.get("verification") or []:
+        if isinstance(item, dict) and item.get("evidence_role") != "interna":
+            item["evidence_role"] = "interna"
+    for turn in data.get("turns") or []:
+        if not isinstance(turn, dict):
+            continue
+        if turn.get("kind") == "confronto":
+            turn["kind"] = "opiniao"
+            turn.pop("role", None)
+        elif turn.get("kind") == "citacao":
+            turn["role"] = "primaria"
+        elif turn.get("role") == "confronto":
+            turn.pop("role", None)
 
 
 def _describe(exc: Exception) -> list[str]:

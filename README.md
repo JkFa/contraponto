@@ -9,13 +9,12 @@ Gere um episódio de podcast com **duas vozes** que **examina, confronta e verif
 | | URL | Estado |
 |---|---|---|
 | Frontend | https://jkfa.github.io/contraponto/ | publicado (GitHub Pages) |
-| Backend | `https://contraponto-api.onrender.com` (confirmar após criar) | pronto para publicar no Render via `render.yaml` |
+| Backend | https://contraponto-api-fgcv.onrender.com | publicado (Render, plano free; dorme após 15 min sem uso) |
 | Repositório | https://github.com/JkFa/contraponto | público |
 
-Enquanto o backend não estiver publicado e ligado ao site (`VITE_API_URL`), a página publicada avisa que o estúdio
-ainda não está conectado. Localmente tudo funciona com `make mock` (sem chaves) ou `make dev` (com chave).
+Localmente tudo funciona com `make mock` (sem chaves) ou `make dev` (com chave em `.env`).
 
-### Para colocar no ar (passos do dono do projeto)
+### Como foi colocado no ar (para refazer do zero)
 
 1. Em https://render.com (login com GitHub): **New → Blueprint** → repositório `JkFa/contraponto`.
 2. Quando pedir, colar o secret `GEMINI_API_KEY` (crie em `aistudio.google.com`); `GROQ_API_KEY` é opcional.

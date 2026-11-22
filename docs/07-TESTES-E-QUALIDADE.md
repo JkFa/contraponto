@@ -82,8 +82,8 @@ Marque somente após **executar** cada item.
 - [x] `make test` e `make lint` verdes
 - [x] `make mock` roda o fluxo completo sem chaves, com e sem confronto
 - [x] Frontend publicado e abrindo no GitHub Pages
-- [ ] Backend no Space com `GET /api/health` ok
-- [ ] Fluxo real: fonte primária + material de confronto → roteiro com verificação → revisão → áudio → MP3 baixado
+- [x] Backend no ar com `GET /api/health` ok (Render, não Space — ver `docs/06 §4R`)
+- [x] Fluxo real: fonte primária + material de confronto → roteiro com verificação → revisão → áudio → MP3 baixado
 - [ ] Fluxo real: só fonte primária (sem confronto) → exame interno → roteiro → áudio
 - [x] Fallback "cole o texto" funcionando quando a transcrição de qualquer fonte falha
 - [ ] **Download** do MP3 e da verificação funciona no Brave desktop

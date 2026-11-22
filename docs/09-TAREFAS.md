@@ -65,7 +65,7 @@
 - [x] Workflows `ci.yml` e `deploy-web.yml`; Pages ativado por `gh api` (ambos verdes)
 - [x] `apps/api` com Dockerfile e front-matter; `scripts/deploy_space.sh`; `make deploy-api` (imagem testada localmente)
 - [x] Publicar o Space (se `hf auth` estiver feito) ou deixar pronto e documentar — HF passou a exigir PRO para Docker (402); backend migrado para **Render** (`render.yaml`, imagem testada com `PORT=10000`); criação do serviço é passo do usuário (`docs/06 §4R`)
-- [ ] Configurar `VITE_API_URL` e redeploy do web — depende da URL do serviço no Render
+- [x] Configurar `VITE_API_URL` e redeploy do web (`https://contraponto-api-fgcv.onrender.com`)
 - [ ] Teste do site publicado: CORS, fluxo completo (com e sem confronto), download e compartilhamento — depende do backend no Render
 
 ## M8 — Qualidade final
